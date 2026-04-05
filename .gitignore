@@ -1,0 +1,14 @@
+# Compiled binaries
+ArmToHack
+*.o
+*.dSYM/
+
+# Temp files generated during translation
+*.tmp
+*.temp
+
+# macOS
+.DS_Store
+
+# VSCode
+.vscode/
