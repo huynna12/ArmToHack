@@ -10,18 +10,58 @@ Takes ARM assembly code as input and translates it into Hack assembly — the in
 
 ### Example
 
-**Input** (`program.arm`):
-```
-MOV R0, R1
+This ARM program initializes registers and runs a loop, accumulating a sum until a counter reaches 5:
+
+**Input** (`program5.arm`):
+```asm
+MOV   R0, #5
+MOV   R1, #0
+MOV   R2, #1
+LOOP
+ADD   R1, R1, R2
+ADD   R2, R2, #1
+CMP   R2, #5
+BLE   LOOP
+END
 ```
 
-**Output** (`program.hack`):
-```
-@1
-D=M
+**Output** (`program5.hack`):
+```asm
+@5
+D=A
 @0
 M=D
+@0
+D=A
+@1
+M=D
+@1
+D=A
+@2
+M=D
+@2
+D=M
+@1
+D=D+M
+@1
+M=D
+@1
+D=A
+@2
+D=D+M
+@2
+M=D
+@5
+D=A
+@2
+D=M-D
+@12
+D;JLE
+@31
+0;JMP
 ```
+
+The translator correctly resolves the `LOOP` label to address `12` and generates the conditional jump `D;JLE` from `BLE`, demonstrating label resolution and branch translation.
 
 ---
 
